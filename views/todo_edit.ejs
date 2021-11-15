@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <title>To-Do List</title>
+   
+    <script src="https://kit.fontawesome.com/c0810a9e25.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+    <div class="todo-container">
+        <h1 class="page-heading">
+            <i class="fas fa-list-alt"></i>
+            Todo List
+        </h1>
+
+
+    <div class="todo-detail-box">
+        <div class="form-detail">
+            <form action="/todo_list" method="POST" class="todo-header">
+
+                <input type="text" name="description" placeholder="what do you need to do?" required>
+
+                <input type="date" name="todo_date" style="width: 48%;" required>
+
+                <!-- <label for="category">Category:</label> -->
+                <select name="category" id="category" style="width: 48%;">
+                <option selected="selected">Choose the desired category</option>
+                <option value="office">Office</option>
+                <option value="public">Public</option>
+                <option value="home">Home</option>
+                <option value="others">Others</option>
+                </select>
+                <div class="button-center">
+                    <button type="submit">Add</button>
+                </div>
+                
+
+            </form>
+        </div> 
+
+    <ul>
+        <% todoTasks.forEach(i => { %>
+        <% if (i.id == idTask) { %>
+        <li class="todo-list-item">
+        <form action="/edit/<%= i.id %>" method="POST"  class="todo-header">
+        <input type="text" value="<%= i.description %>" name="description">
+        <button type="submit" class="confirm">Confirm</button>
+        <a href="/" class="cancel" >Cancel</a>
+        </form>
+        </li>
+        <% } else { %>
+            <li class="todo-list-item">
+                <div class="todo-detail-item">
+                    <p style="font-size: 1.5rem;
+                    font-weight: 700;word-break: break-word;text-transform: capitalize;"> <%= i.description%></p>
+                
+                    <p style="font-size: 1.2rem;"><i class="far fa-calendar-alt" style="
+                        /* margin-left: 0px; */
+                        margin-right: 2px;"></i><%= moment(i.todo_date).format( 'DD MMM YYYY'); %></p>
+
+                        <div class="category-req">
+                            <p> <%= i.category %></p>
+                        </div>
+
+                   
+                </div>
+               
+                <div class="edit-delete" >
+                    <a href="/edit/<%= i.id %>" class="edit">
+                        <span class="fas fa-edit"></span>
+                    </a>
+
+
+                <a href="/delete-list/?id=<%= i.id %>" class="delete">
+                    <i class="fas fa-window-close"></i>
+                </a> 
+                </div>
+                
+                
+            </li>
+        <% } %>
+        <% }) %>
+        </ul>
+        </div>
+</div>
+
+</body>
